@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2018 by kloudless-jsbin-root (http://jsbin.com/wilowep/11/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Kloudless File Explorer</title>
+  <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+  <script src="https://static-cdn.kloudless.com/p/platform/sdk/kloudless.explorer.js"></script>
+</head>
+<body>
+
+  <h1>Welcome to the Kloudless JS File Explorer</h1>
+  <hr />
+
+  <h2>Documentation</h2>
+  <p>Documentation can be found on
+    <a href="https://github.com/kloudless/file-explorer" target="_blank">
+      GitHub</a>.
+  </p>
+  <p>For a version without jQuery, and with all options and event handlers, see
+      <a href="https://output.jsbin.com/yakuwah/" target="_blank">here</a>.
+  </p>
+  
+  <p>Click the Edit button in the top right corner to view the source and try it out for yourself.</p>
+
+  <h2>Example</h2>
+  <p>Click a button below to launch the Chooser or Saver.</p>
+
+  <button id="chooser">Choose a file</button>
+  <button id="saver">Save a file</button>
+
+  <h3>File information</h3>
+  <div id="file-info"><pre>Result will appear here</pre></div>
+<script id="jsbin-javascript">
+var explorer = window.Kloudless.explorer({
+  app_id: '5yvS6puEt2KrmIMeYPW7bmmMewLIyJKYO2ehmJzGhqgSXp_e',
+  multiselect: true,
+  computer: true,
+});
+
+// Chooser
+explorer.on('success', function(files) {
+  $("#file-info > pre").replaceWith(
+    '<pre>' +
+    JSON.stringify(files, null, 2) +
+    '</pre>');
+});
+explorer.choosify($('#chooser'));
+
+// Saver
+var files = [{
+  url: "https://s3-us-west-2.amazonaws.com/static-assets.kloudless.com/static/logo_white.png",
+  name: "kloudless-logo.png"
+}];
+explorer.savify($("#saver"), files);
+</script>
+</body>
+</html>

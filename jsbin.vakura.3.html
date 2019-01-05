@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2018 by kloudless-jsbin-root (http://jsbin.com/vakura/3/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Kloudless File Explorer</title>
+  <script src="https://static-cdn.kloudless.com/p/platform/sdk/kloudless.explorer.js"></script>
+</head>
+<body>
+
+  <h1>Kloudless JS File Explorer Dropzone</h1>
+  <hr />
+
+  <h2>Documentation</h2>
+
+  <p>Documentation can be found in the Dropzone section of the File Explorer's README on <a href="http://github.com/kloudless/file-explorer#dropzone-1" target="_blank">GitHub</a>.</p>
+  
+  <p>Click the Edit button in the top right corner to see the source and try it out for yourself.</p>
+
+<h2>Example</h2>
+
+<div id="dropzone" style="border-style:dashed; border-width:1px; width:500px;height:100px"></div>
+
+<h3>File information</h3>
+  <div id="file-info"><pre>Results will appear here.</pre></div>
+
+<script id="jsbin-javascript">
+// Test drop zone.
+var dropzone = window.Kloudless.dropzone({
+    app_id: 'iCZ_ICMy43H0NSoz0QbLvmyjzCHf2frAOPaBfWVgh9_vrFIM',
+    elementId: 'dropzone', // Element to bind the dropzone to.
+    multiselect: true, // To upload more than 1 file.
+
+    // The options below apply to the File Explorer that appears when the
+    // dropzone is clicked.
+    computer: true,
+    link: true,
+    services: ['all'],
+    types: ['all']
+});
+
+dropzone.on('success', function (files) {
+    console.log('Successfully selected files: ', files);
+    var fileContainer = document.getElementById('file-info');
+
+    // remove all elements
+    while (fileContainer.lastChild) {
+        fileContainer.removeChild(fileContainer.lastChild);
+    }
+
+    var fileJSON = document.createElement('pre');
+    fileJSON.appendChild(document.createTextNode(
+    JSON.stringify(files, null, 2)));
+
+    fileContainer.appendChild(fileJSON);
+});
+
+dropzone.on('cancel', function () {
+    console.log('File selection cancelled.');
+
+    var fileContainer = document.getElementById('file-info');
+
+    // remove all elements
+    while (fileContainer.lastChild) {
+        fileContainer.removeChild(fileContainer.lastChild);
+    }
+
+    var result = document.createElement('p');
+    result.appendChild(document.createTextNode('File selection cancelled!'));
+    fileContainer.appendChild(result);
+});
+
+dropzone.on('error', function (error) {
+    console.log('An error occurred: ', error);
+
+    var fileContainer = document.getElementById('file-info');
+
+    // remove all elements
+    while (fileContainer.lastChild) {
+        fileContainer.removeChild(fileContainer.lastChild);
+    }
+
+    var result = document.createElement('p');
+    result.appendChild(document.createTextNode('An error occurred in file selection!'));
+    fileContainer.appendChild(result);
+});
+
+dropzone.on('addAccount', function (account) {
+    console.log('Succesfully added account: ', account);
+
+    var fileContainer = document.getElementById('file-info');
+
+    // remove all elements
+    while (fileContainer.lastChild) {
+        fileContainer.removeChild(fileContainer.lastChild);
+    }
+
+    var result = document.createElement('p');
+    result.appendChild(document.createTextNode('Account added: ' + JSON.stringify(account)));
+    fileContainer.appendChild(result);
+});
+
+dropzone.on('deleteAccount', function (account) {
+    console.log('Succesfully deleted account: ', account);
+
+    var fileContainer = document.getElementById('file-info');
+
+    // remove all elements
+    while (fileContainer.lastChild) {
+        fileContainer.removeChild(fileContainer.lastChild);
+    }
+
+    var result = document.createElement('p');
+    result.appendChild(document.createTextNode('Deleted account: ' + JSON.stringify(account)));
+    fileContainer.appendChild(result);
+});
+
+dropzone.on('startFileUpload', function (file) {
+    console.log('started file upload file: ', file);
+});
+
+dropzone.on('finishFileUpload', function (file) {
+    console.log('finished file upload file: ', file);
+});
+</script>
+</body>
+</html>
